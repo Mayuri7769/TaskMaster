@@ -1,2 +1,2 @@
 # TaskMaster
-A Collaborative Task Tracking System
+A Collaborative Task Tracking System.
