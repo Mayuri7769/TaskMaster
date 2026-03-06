@@ -1,10 +1,12 @@
 package com.task.taskmanager.controller;
-
 import com.task.taskmanager.entity.User;
+import com.task.taskmanager.dto.LoginRequest;
+import com.task.taskmanager.dto.RegisterRequest;
+import com.task.taskmanager.dto.AuthResponse;
 import com.task.taskmanager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -22,30 +24,20 @@ public class AuthController {
 
     // Register API
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
 
-        User savedUser = userService.registerUser(user);
+        userService.register(request);
 
-        return ResponseEntity.ok(savedUser);
+        return ResponseEntity.ok("User registered successfully");
     }
 
 
     // Login API
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User loginRequest) {
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
 
-        Optional<User> userOptional = userService.findByEmail(loginRequest.getEmail());
+        String token = userService.login(request);
 
-        if (userOptional.isEmpty()) {
-            return ResponseEntity.badRequest().body("User not found");
-        }
-
-        User user = userOptional.get();
-
-        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            return ResponseEntity.badRequest().body("Invalid password");
-        }
-
-        return ResponseEntity.ok("Login successful");
+        return ResponseEntity.ok(new AuthResponse("Login successful", token));
     }
 }
