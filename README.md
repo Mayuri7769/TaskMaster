@@ -1,21 +1,34 @@
-# TaskMaster
-A Collaborative Task Tracking System.
+# TaskMaster Backend
 
+Task tracking backend system built with Spring Boot.
 
-TaskMaster Backend
-
-Tech Stack
+## Tech Stack
 - Java
 - Spring Boot
 - Spring Security
 - JWT Authentication
 - MySQL
-- JPA/Hibernate
+- Maven
 
-Features
+## Features
 - User Registration
-- User Login (JWT)
+- User Login with JWT
 - Create Task
-- Get Tasks
+- View Tasks
 - Update Task
 - Delete Task
+
+## API Endpoints
+
+POST /api/auth/register  
+POST /api/auth/login  
+POST /api/tasks/{userId}  
+GET /api/tasks/{userId}  
+PUT /api/tasks/{taskId}  
+DELETE /api/tasks/{taskId}
+
+## Run Project
+
+1. Clone repo
+2. Configure MySQL in `application.properties`
+3. Run Spring Boot application
