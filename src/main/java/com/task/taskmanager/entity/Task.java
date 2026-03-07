@@ -1,7 +1,9 @@
 package com.task.taskmanager.entity;
 
+import com.task.taskmanager.model.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -18,7 +20,10 @@ public class Task {
 
     private String title;
     private String description;
-    private String status; // TODO, IN_PROGRESS, DONE
+    private LocalDate dueDate;
+
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status; // TODO, IN_PROGRESS, DONE
 
     @ManyToOne
     @JoinColumn(name = "user_id")

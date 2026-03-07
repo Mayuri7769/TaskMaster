@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notifications</title>
+</head>
+<body>
+<h1>Real-Time Notifications</h1>
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script>
+    const socket = new SockJS('/ws-notifications');
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function(frame) {
+        console.log('Connected: ' + frame);
+
+        stompClient.subscribe('/topic/notifications', function(notification) {
+            console.log('Notification:', notification.body);
+            alert(notification.body); // Show popup notification
+        });
+
+        // Optional: send a test message
+        stompClient.send("/app/notify", {}, "Hello from client!");
+    });
+</script>
+</body>
+</html>
