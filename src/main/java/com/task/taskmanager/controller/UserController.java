@@ -5,6 +5,7 @@ import com.task.taskmanager.entity.User;
 import com.task.taskmanager.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import com.task.taskmanager.dto.RegisterRequest;
 
 @RestController
 @RequestMapping("/api/users")
@@ -14,6 +15,12 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    // REGISTER API
+    @PostMapping("/register")
+    public User register(@RequestBody RegisterRequest request) {
+        return userService.register(request);
     }
 
     @GetMapping("/test")
@@ -30,10 +37,9 @@ public class UserController {
     }
 
     @PutMapping("/profile")
-    public User updateProfile(
-            Authentication authentication,
-            @RequestBody User updatedUser
-    ) {
+    public User updateProfile(Authentication authentication,
+            @RequestBody User updatedUser)
+    {
 
         String email = authentication.getName();
 

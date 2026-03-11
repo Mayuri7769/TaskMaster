@@ -2,9 +2,7 @@ package com.task.taskmanager.controller;
 
 import com.task.taskmanager.entity.Comment;
 import com.task.taskmanager.service.CommentService;
-import com.task.taskmanager.entity.Task;
-import com.task.taskmanager.repository.CommentRepository;
-import com.task.taskmanager.repository.TaskRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

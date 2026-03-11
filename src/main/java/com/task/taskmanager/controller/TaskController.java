@@ -51,4 +51,17 @@ public class TaskController {
         taskService.deleteTask(taskId);
         return "Task deleted successfully";
     }
+
+    @PutMapping("/{taskId}/assign/{userId}")
+    public Task assignTask(@PathVariable Long taskId,
+                           @PathVariable Long userId) {
+
+        return taskService.assignTask(taskId, userId);
+    }
+
+    @PatchMapping("/{taskId}/complete")
+    public Task completeTask(@PathVariable Long taskId) {
+
+        return taskService.markTaskCompleted(taskId);
+    }
 }

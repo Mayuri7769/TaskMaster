@@ -23,13 +23,13 @@ public class TaskService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        task.setUser(user);
+        task.setAssignedTo(user);
 
         return taskRepository.save(task);
     }
 
     public List<Task> getTasksByUser(Long userId) {
-        return taskRepository.findByUserId(userId);
+        return taskRepository.findByAssignedToId(userId);
     }
 
     public List<Task> getTasksByStatus(TaskStatus status) {
@@ -51,6 +51,7 @@ public class TaskService {
 
         task.setTitle(updatedTask.getTitle());
         task.setDescription(updatedTask.getDescription());
+        task.setDueDate(updatedTask.getDueDate());
         task.setStatus(updatedTask.getStatus());
 
         return taskRepository.save(task);
@@ -58,5 +59,28 @@ public class TaskService {
 
     public void deleteTask(Long taskId) {
         taskRepository.deleteById(taskId);
+    }
+
+    public Task assignTask(Long taskId, Long userId) {
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        task.setAssignedTo(user);
+
+        return taskRepository.save(task);
+    }
+
+    public Task markTaskCompleted(Long taskId) {
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
+
+        task.setStatus(TaskStatus.COMPLETED);
+
+        return taskRepository.save(task);
     }
 }

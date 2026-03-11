@@ -23,4 +23,11 @@ public class TeamController {
     public List<Team> getAllTeams() {
         return teamService.getAllTeams();
     }
+
+    @PostMapping("/{teamId}/join/{userId}")
+    public Team joinTeam(@PathVariable Long teamId,
+                         @PathVariable Long userId) {
+
+        return teamService.joinTeam(teamId, userId);
+    }
 }

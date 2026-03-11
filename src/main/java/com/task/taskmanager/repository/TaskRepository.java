@@ -12,9 +12,13 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    List<Task> findByUserId(Long userId);
+    // Get tasks assigned to a user
+    List<Task> findByAssignedToId(Long userId);
+
+    // Filter tasks by status
     List<Task> findByStatus(TaskStatus status);
 
+    // Search tasks by title or description
     @Query("SELECT t FROM Task t WHERE t.title LIKE %:keyword% OR t.description LIKE %:keyword%")
     List<Task> searchTasks(@Param("keyword") String keyword);
 }

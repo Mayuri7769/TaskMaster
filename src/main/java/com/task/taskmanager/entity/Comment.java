@@ -23,4 +23,11 @@ public class Comment {
 
     @ManyToOne
     private User user;
+
+    // don't need to set createdAt manually in service
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
 }

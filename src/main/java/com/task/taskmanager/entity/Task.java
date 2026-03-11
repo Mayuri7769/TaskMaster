@@ -4,6 +4,7 @@ import com.task.taskmanager.model.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,7 +26,22 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private TaskStatus status; // TODO, IN_PROGRESS, DONE
 
+    // Task assigned to a user
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "assigned_to")
+    private User assignedTo;
+
+    // Task belongs to a team/project
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
+
+    // Comments on task
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+    // Attachments on task
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL)
+    private List<Attachment> attachments;
+
 }

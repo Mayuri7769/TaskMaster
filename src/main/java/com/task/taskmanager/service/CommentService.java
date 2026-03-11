@@ -24,7 +24,8 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException("Task not found"));
 
         comment.setTask(task);
-        comment.setCreatedAt(LocalDateTime.now());
+
+        //comment.setCreatedAt(LocalDateTime.now());
 
         return commentRepository.save(comment);
     }

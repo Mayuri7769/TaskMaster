@@ -1,10 +1,6 @@
 package com.task.taskmanager.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import lombok.Data;
 
@@ -20,5 +16,6 @@ public class Attachment {
     private String fileUrl;
 
     @ManyToOne
+    @JoinColumn(name = "task_id")
     private Task task;
 }

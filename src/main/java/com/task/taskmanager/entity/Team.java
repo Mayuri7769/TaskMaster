@@ -1,12 +1,11 @@
 package com.task.taskmanager.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,4 +19,7 @@ public class Team {
 
     @ManyToOne
     private User createdBy;
+
+    @ManyToMany
+    private List<User> members = new ArrayList<>();
 }

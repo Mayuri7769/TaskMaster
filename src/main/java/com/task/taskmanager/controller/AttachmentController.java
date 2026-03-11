@@ -1,7 +1,7 @@
 package com.task.taskmanager.controller;
 
 import com.task.taskmanager.entity.Attachment;
-import com.task.taskmanager.repository.AttachmentRepository;
+import com.task.taskmanager.service.AttachmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,32 +12,35 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AttachmentController {
 
-    private final AttachmentRepository attachmentRepository;
+    private final AttachmentService attachmentService;
 
-    // Upload/save attachment
-    @PostMapping
-    public Attachment uploadAttachment(@RequestBody Attachment attachment) {
-        return attachmentRepository.save(attachment);
+    // Upload attachment for task
+    @PostMapping("/task/{taskId}")
+    public Attachment uploadAttachment(@PathVariable Long taskId,
+                                       @RequestBody Attachment attachment) {
+
+        return attachmentService.uploadAttachment(taskId, attachment);
     }
 
     // Get all attachments
     @GetMapping
     public List<Attachment> getAllAttachments() {
-        return attachmentRepository.findAll();
+        return attachmentService.getAllAttachments();
     }
 
     // Get attachment by ID
     @GetMapping("/{id}")
     public Attachment getAttachmentById(@PathVariable Long id) {
-        return attachmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Attachment not found with id " + id));
+        return attachmentService.getAttachmentById(id);
     }
 
-    // Delete attachment by ID
+    // Delete attachment
     @DeleteMapping("/{id}")
     public String deleteAttachment(@PathVariable Long id) {
-        attachmentRepository.deleteById(id);
-        return "Attachment deleted with id: " + id;
+
+        attachmentService.deleteAttachment(id);
+
+        return "Attachment deleted successfully";
     }
 
 }
